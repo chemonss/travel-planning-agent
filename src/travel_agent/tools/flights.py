@@ -125,22 +125,35 @@ def search_flights(
     return db.fetch_all(query, tuple(params))
 
 
-def score_flight(flight: dict[str, Any]) -> int:
+def score_flight(
+    flight: dict[str, Any],
+    budget_sensitive: bool = False,
+) -> int:
     """
-    Calculates a simple ranking score for a flight.
+    Calculates a ranking score for a flight.
 
-    Lower score is better. Price is the main factor, while stops, missing
-    baggage, early departure and night arrival add penalties.
+    Lower score is better. The score balances price and comfort. If the group
+    is budget-sensitive, cheaper flights and flights marked as budget-compatible
+    are preferred more strongly.
 
     @param flight Flight row dictionary.
+    @param budget_sensitive Whether budget constraints should dominate comfort.
     @return Integer score.
     """
     score = int(flight["price_rub"])
 
-    if int(flight["baggage_included"]) == 0:
+    baggage_included = int(flight["baggage_included"])
+    stops = int(flight["stops"])
+    fare_type = str(flight["fare_type"]).lower()
+    notes = str(flight.get("notes") or "").lower()
+
+    if baggage_included == 0:
         score += 20_000
 
-    score += int(flight["stops"]) * 10_000
+    if budget_sensitive:
+        score += stops * 4_000
+    else:
+        score += stops * 10_000
 
     if is_early_departure(flight["departure_time"]):
         score += 15_000
@@ -148,27 +161,40 @@ def score_flight(flight: dict[str, Any]) -> int:
     if is_night_arrival(flight["arrival_time"]):
         score += 30_000
 
-    if flight["fare_type"] == "basic":
+    if fare_type == "basic":
         score += 5_000
-
-    if flight["fare_type"] == "comfort":
+    elif fare_type == "comfort" and not budget_sensitive:
         score -= 3_000
+
+    if budget_sensitive:
+        if "под бюджет" in notes or "бюджет" in notes or "лимит" in notes:
+            score -= 12_000
+
+        if "дороже" in notes:
+            score += 10_000
 
     return score
 
 
-def rank_flights(flights: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def rank_flights(
+    flights: list[dict[str, Any]],
+    budget_sensitive: bool = False,
+) -> list[dict[str, Any]]:
     """
     Sorts flight candidates by planning score.
 
     @param flights List of flight dictionaries.
+    @param budget_sensitive Whether budget constraints should dominate comfort.
     @return Ranked list of flights with an additional ranking_score field.
     """
     ranked_flights = []
 
     for flight in flights:
         ranked_flight = dict(flight)
-        ranked_flight["ranking_score"] = score_flight(flight)
+        ranked_flight["ranking_score"] = score_flight(
+            flight,
+            budget_sensitive=budget_sensitive,
+        )
         ranked_flights.append(ranked_flight)
 
     return sorted(
@@ -246,6 +272,11 @@ def infer_flight_constraints_from_group(
         ["только прямой", "прямой рейс", "direct only"],
     )
 
+    budget_sensitive = _text_contains_any(
+        combined_text,
+        ["бюджет", "лимит", "сниж", "дешевле", "budget"],
+    )   
+
     return {
         "origin_city": group["origin_city"],
         "destination": group["destination"],
@@ -253,6 +284,7 @@ def infer_flight_constraints_from_group(
         "avoid_night_arrival": avoid_night_arrival,
         "avoid_early_departure": avoid_early_departure,
         "direct_only": direct_only,
+        "budget_sensitive": budget_sensitive,
     }
 
 
@@ -288,4 +320,7 @@ def search_flights_for_group(
         db=db,
     )
 
-    return rank_flights(candidates)
+    return rank_flights(
+        candidates,
+        budget_sensitive=constraints["budget_sensitive"],
+    )
