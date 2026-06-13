@@ -1,0 +1,12 @@
+group_id,traveler_id,role_in_group
+G-0001,T-0001,parent
+G-0001,T-0002,parent
+G-0001,T-0003,child
+G-0002,T-0004,adult
+G-0002,T-0005,adult
+G-0003,T-0006,adult
+G-0004,T-0007,adult
+G-0005,T-0008,adult
+G-0005,T-0009,adult
+G-0006,T-0003,child
+G-0006,T-0010,adult

@@ -1,0 +1,4 @@
+tour_id,destination,total_price_rub,includes_flight,includes_transfer,hotel_id,notes
+TR-020,DXB,214700,1,1,HT-101,"Пляжный пакетный тур для пары"
+TR-114,AYT,128000,1,1,HT-301,"Бюджетный тур с перелётом и трансфером"
+TR-203,HKT,291500,1,1,HT-510,"Пакетный вариант, требуется ручная проверка ограничений"

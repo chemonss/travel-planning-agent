@@ -1,0 +1,13 @@
+flight_id,origin_city,destination,price_rub,baggage_included,stops,departure_time,arrival_time,fare_type,notes
+FL-102,Moscow,IST,74200,1,1,10:20,15:40,standard,"Короткая пересадка, дневной прилёт"
+FL-118,Moscow,IST,69500,0,1,05:50,12:30,basic,"Дешевле, но ранний вылет и без багажа"
+FL-205,St Petersburg,DXB,118500,1,0,12:15,19:10,comfort,"Прямой рейс"
+FL-209,St Petersburg,DXB,96300,1,1,06:00,16:50,standard,"Одна длинная пересадка"
+FL-311,Moscow,BKK,154000,1,1,11:40,23:10,standard,"Удобное время и багаж включён"
+FL-320,Moscow,BKK,132000,0,1,04:30,20:55,basic,"Ранний вылет и без багажа"
+FL-412,Moscow,AYT,69800,1,1,09:10,16:20,standard,"Под бюджет после снижения лимита"
+FL-419,Moscow,AYT,75100,1,0,14:20,18:30,comfort,"Прямой, но дороже"
+FL-510,Moscow,BCN,129000,1,0,13:05,18:10,comfort,"Прямой рейс, дорого для заданного бюджета"
+FL-516,Moscow,BCN,102000,1,1,07:30,17:40,standard,"Подешевле, но пересадка почти 5 часов"
+FL-611,Moscow,HKT,186500,1,1,11:00,04:20,standard,"Требуется проверка визового кейса"
+FL-618,Moscow,HKT,172000,0,2,03:50,01:10,basic,"Слишком ранний вылет и две пересадки"

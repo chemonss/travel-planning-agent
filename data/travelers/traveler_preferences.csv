@@ -1,0 +1,12 @@
+traveler_id,preference_type,preference_value,comment
+T-0001,departure_time,daytime,"Избегает вылетов до 06:00"
+T-0002,hotel_class,4plus,"Предпочитает 4* и выше"
+T-0002,meal,breakfast,"Завтрак обязателен"
+T-0003,flight,avoid_night_arrival,"С ребёнком лучше без ночного прилёта"
+T-0004,layover,max_2h,"Пересадки длиннее 2 часов нежелательны"
+T-0005,hotel_style,quiet_beach,"Нужен спокойный отель у моря"
+T-0006,baggage,included,"Багаж обязательно включён"
+T-0007,cancellation,free,"Нужна бесплатная отмена"
+T-0008,flight,direct,"По возможности только прямые рейсы"
+T-0009,location,city_center,"Отель ближе к центру"
+T-0010,restriction,visa_check,"Перед бронированием нужна проверка визовых условий"
