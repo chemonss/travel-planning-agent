@@ -1,5 +1,6 @@
 from typing import Any
 
+from travel_agent.rag.retriever import retrieve_policy_context
 from travel_agent.tools.groups import get_full_group_profile
 from travel_agent.tools.trip_options import get_trip_options_for_group
 from travel_agent.tools.flights import search_flights_for_group
@@ -69,4 +70,24 @@ def compare_tour_with_independent_tool(
         tour=tour,
         flight=flight,
         hotel=hotel,
+    )
+
+
+def retrieve_policy_context_tool(
+    query: str,
+    top_k: int = 4,
+) -> dict[str, Any]:
+    """
+    Retrieves policy context from markdown documents.
+
+    The agent should use this tool before answering info, planning,
+    replanning, clarification, rejection or escalation questions.
+
+    @param query User request or internal policy question.
+    @param top_k Number of policy chunks to retrieve.
+    @return Retrieved chunks and formatted context.
+    """
+    return retrieve_policy_context(
+        query=query,
+        top_k=top_k,
     )
