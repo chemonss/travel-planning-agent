@@ -1,0 +1,22 @@
+# Конфигурация агента планирования путешествий.
+# Значения дублируют дефолты в коде; реальные секреты/переключатели — через .env.
+
+llm:
+  # Локальный qwen через Ollama (OpenAI-совместимый API). Переопределяется .env:
+  # OLLAMA_BASE_URL, QWEN_MODEL.
+  base_url: http://localhost:11434/v1
+  model: qwen2.5:7b      # по умолчанию; 3b быстрее, но слабее на submit_answer
+  temperature: 0
+
+agent_loop:
+  max_iterations: 12
+  max_reflections: 1
+
+paths:
+  database: data/travelers/travelers.sqlite
+  documents: data/documents
+  memory: data/memory
+  qa_dataset: data/qa/qa.jsonl
+  reference_dir: data/reference
+  report: evaluation_report.md
+  metrics: data/eval/metrics.json

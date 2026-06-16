@@ -51,6 +51,9 @@ coverage.xml
 .pytest_cache/
 cover/
 
+# Runtime agent memory (digital twin) — not source
+data/memory/
+
 # Translations
 *.mo
 *.pot

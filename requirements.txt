@@ -1,4 +1,8 @@
 pandas
 numpy
 tqdm
-pytest
+pydantic
+pyyaml
+python-dotenv
+openai
+langchain-gigachat

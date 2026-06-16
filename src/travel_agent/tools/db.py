@@ -3,7 +3,9 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_DB_PATH = Path("data/travelers/travelers.sqlite")
+# Якорим путь к БД на корень проекта, чтобы tools работали из любого cwd.
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]
+DEFAULT_DB_PATH = _PROJECT_ROOT / "data" / "travelers" / "travelers.sqlite"
 
 
 class TravelDatabase:

@@ -5,7 +5,9 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_DOCUMENTS_DIR = Path("data/documents")
+# Якорим путь к документам на корень проекта, чтобы RAG работал из любого cwd.
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]
+DEFAULT_DOCUMENTS_DIR = _PROJECT_ROOT / "data" / "documents"
 
 
 STOPWORDS = {
